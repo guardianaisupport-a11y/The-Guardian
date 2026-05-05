@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>The Guardian</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+
+        <h3>🤖 The Guardian</h3>
+
+        <div class="user-profile">
+            <div class="profile-info">
+                <span id="userName">User</span>
+                <span id="riskBadge" class="risk-badge medium">Medium Risk</span>
+            </div>
+
+            <button id="profileSettingsBtn">⚙</button>
+        </div>
+
+        <div class="risk-indicator">
+            <div class="risk-info">
+                Response Level:
+                <span id="responseLevel">Moderate Detail</span>
+            </div>
+            <div class="risk-note">
+                You'll receive moderate warnings with source suggestions
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Chat Container -->
+    <div class="chat-container">
+
+        <div id="chatMessages" class="chat-messages">
+
+            <div class="message system-message">
+                🤖 Hey, Guardian is here looking out for you.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Input Area -->
+    <div class="input-area">
+
+        <textarea
+                id="userInput"
+                rows="3"
+                placeholder="Ask anything... or paste any text you want to analyze">
+        </textarea>
+
+        <div class="input-button-row">
+
+            <button id="sendButton">
+                Analyze Misinformation
+            </button>
+
+        </div>
+
+        <div class="input-helper-text">
+            Paste or type text to check for misinformation. Use the button below for hate speech tools.
+        </div>
+
+    </div>
+
+
+    <!-- Status Area -->
+    <div class="status">
+        <div class="status-item">
+            <span>Subscription:</span>
+            <span id="subscriptionPlan">Inactive</span>
+        </div>
+
+        <div class="status-item">
+            <span>Time Remaining:</span>
+            <span id="subscriptionCountdown">00d 00h 00m 00s</span>
+        </div>
+
+        <div class="status-item">
+            <span>Misinformation Check:</span>
+            <span id="misinfoResult">Waiting...</span>
+        </div>
+
+        <div class="status-item">
+            <span>Susceptibility Score:</span>
+            <span id="susceptibilityResult">--</span>
+        </div>
+
+    </div>
+
+
+    <!-- Misinformation Action Buttons -->
+    <div class="action-buttons">
+
+        <button id="questionBtn" class="action-btn">
+            ❓ Question Result
+        </button>
+
+        <button id="acceptBtn" class="action-btn">
+            ✅ Accept Correction
+        </button>
+
+        <button id="rejectBtn" class="action-btn">
+            ❌ Reject Correction
+        </button>
+
+    </div>
+
+    <div class="popup-footer">
+        <button type="button" id="openHateSpeechToolsBtn" class="hate-tools-footer-btn">
+            🟤 Hate speech tools
+        </button>
+    </div>
+
+</div>
+
+
+<!-- Profile Modal -->
+<div id="profileModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close-modal">&times;</span>
+
+        <h3>User Profile Settings</h3>
+
+        <div class="form-group">
+            <label>Education Level</label>
+
+            <select id="educationLevel">
+                <option value="school">School</option>
+                <option value="undergraduate">Undergraduate</option>
+                <option value="graduate">Graduate</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Political Ideology</label>
+
+            <select id="politicalIdeology">
+                <option value="neutral">Neutral</option>
+                <option value="liberal">Liberal</option>
+                <option value="conservative">Conservative</option>
+            </select>
+        </div>
+
+        <button id="saveProfileBtn" class="btn-primary">
+            Save Profile
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="config.js"></script>
+<script src="popup.js"></script>
+
+</body>
+</html>

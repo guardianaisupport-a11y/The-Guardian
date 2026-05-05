@@ -1,0 +1,703 @@
+/* Guardian Badge Styles for Link Scanning - Content Script Only */
+/* This file is injected into web pages, so it only contains badge styles */
+
+/* Text selection — icon only (icons/logov.jpeg), no button chrome */
+.guardian-analyze-btn {
+    position: absolute;
+    z-index: 2147483647;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    line-height: 0;
+    cursor: pointer;
+    box-shadow: none;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.guardian-analyze-btn__logo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    pointer-events: none;
+    user-select: none;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.28));
+    transition: transform 0.12s ease, filter 0.12s ease, opacity 0.12s ease;
+}
+
+.guardian-analyze-btn:hover .guardian-analyze-btn__logo {
+    filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.35));
+    transform: scale(1.06);
+}
+
+.guardian-analyze-btn:active .guardian-analyze-btn__logo {
+    transform: scale(0.96);
+}
+
+.guardian-analyze-btn:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 3px;
+    border-radius: 50%;
+}
+
+/* Text selection — hate speech (brown) icon on opposite side */
+.guardian-hate-btn {
+    position: absolute;
+    z-index: 2147483647;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    line-height: 0;
+    cursor: pointer;
+    box-shadow: none;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    transform: translateX(-100%);
+}
+
+.guardian-hate-btn__logo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    pointer-events: none;
+    user-select: none;
+    filter:
+        sepia(1)
+        saturate(1.25)
+        hue-rotate(330deg)
+        brightness(0.92)
+        drop-shadow(0 2px 6px rgba(0, 0, 0, 0.28));
+    transition: transform 0.12s ease, filter 0.12s ease, opacity 0.12s ease;
+}
+
+.guardian-hate-btn:hover .guardian-hate-btn__logo {
+    filter:
+        sepia(1)
+        saturate(1.35)
+        hue-rotate(330deg)
+        brightness(0.95)
+        drop-shadow(0 3px 10px rgba(0, 0, 0, 0.35));
+    transform: scale(1.06);
+}
+
+.guardian-hate-btn:active .guardian-hate-btn__logo {
+    transform: scale(0.96);
+}
+
+.guardian-hate-btn:focus-visible {
+    outline: 2px solid #9a3412;
+    outline-offset: 3px;
+    border-radius: 50%;
+}
+
+.guardian-pii-popup {
+    position: fixed;
+    z-index: 2147483647;
+    width: 380px;
+    max-width: calc(100vw - 24px);
+    background: #111827;
+    color: #f9fafb;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.35);
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    padding: 12px 12px 10px 12px;
+    display: none;
+}
+
+.guardian-pii-popup[data-visible="true"] {
+    display: block;
+}
+
+.guardian-pii-popup__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.guardian-pii-popup__title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.guardian-pii-popup__close {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: rgba(249, 250, 251, 0.8);
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 28px;
+    text-align: center;
+}
+
+.guardian-pii-popup__close:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+}
+
+.guardian-pii-popup__risk {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.guardian-pii-popup__risk[data-level="high"] {
+    background: rgba(220, 38, 38, 0.2);
+    border: 1px solid rgba(220, 38, 38, 0.45);
+    color: #fecaca;
+}
+
+.guardian-pii-popup__risk[data-level="medium"] {
+    background: rgba(245, 158, 11, 0.18);
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    color: #fde68a;
+}
+
+.guardian-pii-popup__section {
+    font-size: 12.5px;
+    line-height: 1.35;
+    color: rgba(249, 250, 251, 0.92);
+    margin-bottom: 8px;
+}
+
+.guardian-pii-popup__label {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(249, 250, 251, 0.92);
+    margin: 10px 0 6px 0;
+}
+
+.guardian-pii-popup__reasons {
+    margin: 6px 0 0 18px;
+    padding: 0;
+}
+
+.guardian-pii-popup__reasons li {
+    margin: 3px 0;
+    color: rgba(249, 250, 251, 0.9);
+    font-size: 12.5px;
+}
+
+.guardian-pii-popup__suggestion {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 12.5px;
+    line-height: 1.35;
+    color: #f9fafb;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 0;
+}
+
+.guardian-pii-popup__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.guardian-pii-popup__btn {
+    appearance: none;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #f9fafb;
+    padding: 7px 10px;
+    font-size: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.guardian-pii-popup__btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.guardian-pii-popup__btn--primary {
+    background: #2563eb;
+    border-color: rgba(37, 99, 235, 0.8);
+}
+
+.guardian-pii-popup__btn--primary:hover {
+    background: #1d4ed8;
+}
+
+/* Inline composer hint when PII / OpSec risk */
+.guardian-composer--pii-risk[data-pii-level="medium"] {
+    outline: 2px solid rgba(245, 158, 11, 0.92) !important;
+    outline-offset: 3px;
+    border-radius: 10px;
+}
+
+.guardian-composer--pii-risk[data-pii-level="high"] {
+    outline: 2px solid rgba(220, 38, 38, 0.94) !important;
+    outline-offset: 3px;
+    border-radius: 10px;
+}
+
+/* Compact teaser bubble — colors encode risk (medium = amber, high = red) */
+.guardian-pii-teaser {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 268px;
+    padding: 10px 13px 11px;
+    background: #ffffff;
+    color: #1f2937;
+    border-radius: 14px;
+    border: 1px solid rgba(124, 58, 237, 0.35);
+    box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.06),
+        0 12px 28px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    align-self: flex-end;
+    position: relative;
+    margin-bottom: 4px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    z-index: 1;
+}
+
+.guardian-pii-teaser:hover {
+    transform: translateY(-1px);
+}
+
+.guardian-pii-teaser[data-risk="medium"] {
+    background: linear-gradient(
+        165deg,
+        #fef3c7 0%,
+        #fffbeb 35%,
+        #ffffff 100%
+    );
+    border: 1.5px solid rgba(234, 88, 12, 0.65);
+    border-left-width: 5px;
+    border-left-color: #ea580c;
+    box-shadow:
+        0 4px 8px rgba(234, 88, 12, 0.12),
+        0 10px 28px rgba(245, 158, 11, 0.18);
+}
+
+.guardian-pii-teaser[data-risk="medium"]:hover {
+    box-shadow:
+        0 6px 12px rgba(234, 88, 12, 0.16),
+        0 14px 36px rgba(245, 158, 11, 0.22);
+}
+
+.guardian-pii-teaser[data-risk="high"] {
+    background: linear-gradient(
+        165deg,
+        #fecaca 0%,
+        #fef2f2 38%,
+        #ffffff 100%
+    );
+    border: 1.5px solid rgba(220, 38, 38, 0.65);
+    border-left-width: 5px;
+    border-left-color: #dc2626;
+    box-shadow:
+        0 4px 8px rgba(220, 38, 38, 0.14),
+        0 10px 28px rgba(239, 68, 68, 0.2);
+}
+
+.guardian-pii-teaser[data-risk="high"]:hover {
+    box-shadow:
+        0 6px 12px rgba(220, 38, 38, 0.18),
+        0 14px 36px rgba(239, 68, 68, 0.26);
+}
+
+.guardian-pii-teaser__text {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #374151;
+}
+
+.guardian-pii-teaser[data-risk="medium"] .guardian-pii-teaser__text {
+    color: #9a3412;
+}
+
+.guardian-pii-teaser[data-risk="high"] .guardian-pii-teaser__text {
+    color: #991b1b;
+}
+
+.guardian-pii-teaser__hint {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: #6b7280;
+}
+
+.guardian-pii-teaser[data-risk="medium"] .guardian-pii-teaser__hint {
+    color: #b45309;
+    font-weight: 600;
+}
+
+.guardian-pii-teaser[data-risk="high"] .guardian-pii-teaser__hint {
+    color: #b91c1c;
+    font-weight: 600;
+}
+
+.guardian-pii-teaser::after {
+    content: "";
+    position: absolute;
+    bottom: -7px;
+    right: 20px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #ffffff;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.06));
+}
+
+.guardian-pii-teaser[data-risk="medium"]::after {
+    border-top-color: #fffbeb;
+}
+
+.guardian-pii-teaser[data-risk="high"]::after {
+    border-top-color: #fef2f2;
+}
+
+.guardian-pii-teaser--floating {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: 88px;
+    z-index: 2147483645;
+}
+
+.guardian-badge {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 8px;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: sans-serif;
+    z-index: 10;
+    vertical-align: middle;
+    white-space: nowrap;
+    transition: all 0.2s ease-in-out;
+    user-select: none;
+}
+
+.guardian-badge-safe {
+    background-color: #2ecc71;
+    color: #ffffff;
+    border: 1px solid #27ae60;
+}
+
+.guardian-badge-safe:hover {
+    background-color: #27ae60;
+    transform: scale(1.05);
+}
+
+.guardian-badge-suspicious {
+    background-color: #f59e0b;
+    color: #ffffff;
+    border: 1px solid #d97706;
+}
+
+.guardian-badge-suspicious:hover {
+    background-color: #d97706;
+    transform: scale(1.05);
+}
+
+.guardian-badge-danger {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: 1px solid #c0392b;
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+.guardian-badge-danger:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(231, 76, 60, 0);
+    }
+}
+
+.guardian-badge-loading {
+    background-color: #95a5a6;
+    color: #ffffff;
+    border: 1px solid #7f8c8d;
+    animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+.guardian-badge-error {
+    background-color: #f1c40f;
+    color: #ffffff;
+    border: 1px solid #f39c12;
+}
+
+@media (max-width: 768px) {
+    .guardian-badge {
+        font-size: 10px;
+        padding: 1px 4px;
+        margin-left: 4px;
+    }
+}
+
+@media (prefers-contrast: high) {
+    .guardian-badge {
+        border-width: 2px;
+    }
+    
+    .guardian-badge-safe {
+        background-color: #27ae60;
+    }
+    
+    .guardian-badge-suspicious {
+        background-color: #d97706;
+    }
+    
+    .guardian-badge-danger {
+        background-color: #c0392b;
+    }
+    
+    .guardian-badge-loading {
+        background-color: #7f8c8d;
+    }
+}
+
+/* Floating Guardian FAB — undercover quick actions */
+.guardian-fab-root {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    z-index: 2147483646;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.guardian-fab-panel {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    min-width: 200px;
+    max-width: min(280px, calc(100vw - 32px));
+    background: rgba(17, 24, 39, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    pointer-events: auto;
+}
+
+.guardian-fab-root--open .guardian-fab-panel {
+    display: flex;
+    animation: guardianFabIn 0.2s ease-out;
+}
+
+@keyframes guardianFabIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.guardian-fab-option {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    width: 100%;
+    margin: 0;
+    padding: 10px 12px;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #f9fafb;
+    cursor: pointer;
+    font: inherit;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.guardian-fab-option:hover {
+    background: rgba(37, 99, 235, 0.25);
+    border-color: rgba(96, 165, 250, 0.45);
+}
+
+.guardian-fab-option__code {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #e5e7eb;
+}
+
+.guardian-fab-option__sub {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(249, 250, 251, 0.7);
+}
+
+.guardian-fab-main {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: radial-gradient(
+        circle at 32% 28%,
+        #7dd3fc 0%,
+        #38bdf8 18%,
+        #2563eb 42%,
+        #6366f1 68%,
+        #4c1d95 100%
+    );
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 700;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow:
+        0 4px 18px rgba(99, 102, 241, 0.45),
+        0 8px 32px rgba(59, 130, 246, 0.35),
+        0 2px 8px rgba(79, 70, 229, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.guardian-fab-main:hover {
+    transform: scale(1.06);
+    filter: brightness(1.05);
+    box-shadow:
+        0 6px 28px rgba(99, 102, 241, 0.55),
+        0 12px 40px rgba(59, 130, 246, 0.4),
+        0 2px 12px rgba(124, 58, 237, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.guardian-fab-root--open .guardian-fab-main {
+    box-shadow:
+        0 4px 22px rgba(99, 102, 241, 0.55),
+        0 0 0 3px rgba(167, 139, 250, 0.35),
+        0 10px 36px rgba(59, 130, 246, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* FAB warns while composer has PII / OpSec risk */
+.guardian-fab-main.guardian-fab-main--pii-medium {
+    background: radial-gradient(
+        circle at 32% 28%,
+        #fde68a 0%,
+        #f59e0b 35%,
+        #ea580c 70%,
+        #9a3412 100%
+    );
+    color: #fff;
+    box-shadow:
+        0 4px 22px rgba(234, 88, 12, 0.55),
+        0 8px 32px rgba(245, 158, 11, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.guardian-fab-main.guardian-fab-main--pii-high {
+    background: radial-gradient(
+        circle at 32% 28%,
+        #fecaca 0%,
+        #ef4444 38%,
+        #b91c1c 78%,
+        #7f1d1d 100%
+    );
+    color: #fff;
+    box-shadow:
+        0 4px 24px rgba(220, 38, 38, 0.55),
+        0 8px 36px rgba(239, 68, 68, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .guardian-fab-panel,
+    .guardian-fab-main {
+        animation: none !important;
+        transition: none;
+    }
+    .guardian-fab-main:hover {
+        transform: none;
+    }
+    .guardian-fab-root--open .guardian-fab-panel {
+        animation: none;
+    }
+
+    .guardian-badge {
+        animation: none;
+        transition: none;
+    }
+
+    .guardian-badge-danger {
+        animation: none;
+    }
+
+    .guardian-badge-loading {
+        animation: none;
+    }
+
+    .guardian-badge:hover {
+        transform: none;
+    }
+}

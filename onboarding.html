@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Misinformation Detector</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="onboarding-page">
+    <div class="onboarding-container">
+        <div class="header">
+            <h1>🤖 Welcome!</h1>
+            <p>Let's set up your profile to get started</p>
+        </div>
+        
+        <form id="onboardingForm">
+            <div class="form-group">
+                <label for="userName">Name <span class="required">*</span></label>
+                <input type="text" id="userName" name="userName" required placeholder="Enter your name">
+                <div class="error-message" id="nameError">Please enter your name</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="ageGroup">Age Group <span class="required">*</span></label>
+                <select id="ageGroup" name="ageGroup" required>
+                    <option value="">Select age group</option>
+                    <option value="under_18">Under 18</option>
+                    <option value="18_25">18-25</option>
+                    <option value="26_40">26-40</option>
+                    <option value="above_40">Above 40</option>
+                </select>
+                <div class="error-message" id="ageError">Please select your age group</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="educationLevel">Education Level <span class="required">*</span></label>
+                <select id="educationLevel" name="educationLevel" required>
+                    <option value="">Select education level</option>
+                    <option value="school">School</option>
+                    <option value="undergraduate">Undergraduate</option>
+                    <option value="postgraduate">Postgraduate</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="error-message" id="educationError">Please select your education level</div>
+            </div>
+            
+            <button type="submit" class="submit-btn">Get Started</button>
+        </form>
+        
+        <div class="privacy-note">
+            <strong>🔒 Privacy Note:</strong> Your data is stored locally on your device. We only track interaction patterns with misinformation content, not your personal browsing history. You can update your information anytime.
+        </div>
+    </div>
+    
+    <script src="onboarding.js"></script>
+</body>
+</html>

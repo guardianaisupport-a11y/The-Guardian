@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Preview - The Guardian</title>
+    <link rel="stylesheet" href="safe-preview.css">
+</head>
+<body>
+    <div class="preview-container">
+        <!-- Header -->
+        <div class="preview-header">
+            <div class="header-content">
+                <div class="header-title">
+                    <span class="shield-icon">🛡️</span>
+                    <span>Safe Preview - The Guardian</span>
+                </div>
+                <div class="header-warning">
+                    <span class="warning-icon">⚠️</span>
+                    <span>This link was flagged as suspicious. Preview safely below.</span>
+                </div>
+                <div style="color: #fff; font-size: 11px; margin-top: 4px; opacity: 0.8;">
+                    💡 Debug: Right-click this window → Inspect to see console logs
+                </div>
+            </div>
+            <button id="close-btn" class="close-btn" title="Close preview">✕</button>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading preview metadata...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error-state" class="error-state" style="display: none;">
+            <span class="error-icon">❌</span>
+            <p id="error-message">Unable to load preview</p>
+            <button id="retry-btn" class="retry-btn">Retry</button>
+        </div>
+
+        <!-- Main Content -->
+        <div id="preview-content" class="preview-content" style="display: none;">
+            <!-- Cloudflare Warning Banner -->
+            <div id="cloudflare-warning" class="cloudflare-warning" style="display: none;">
+                <div class="cloudflare-warning-content">
+                    <span class="cloudflare-icon">⚠️</span>
+                    <div class="cloudflare-warning-text">
+                        <strong>This website uses advanced bot protection (Cloudflare).</strong>
+                        <p>Full preview may not be available. Metadata preview is shown instead.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Detailed Flagged Items Log -->
+            <div id="detailed-log-panel" class="detailed-log-panel" style="display: none;">
+                <div class="panel-header">
+                    <h2>📋 Security Analysis Details</h2>
+                </div>
+                <div class="log-content">
+                    <div class="log-item-header">
+                        <div class="log-item-main">
+                            <div class="log-item-verdict" id="log-verdict">SUSPICIOUS</div>
+                            <div class="log-item-score">
+                                Risk: <strong id="log-risk-score">0</strong>
+                                <span class="confidence-badge">Confidence: <span id="log-confidence">0</span>%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="log-details">
+                        <div class="log-detail-section">
+                            <div class="log-detail-label">URL:</div>
+                            <div class="log-detail-value url-value" id="log-url">-</div>
+                        </div>
+                        <div class="log-detail-section">
+                            <div class="log-detail-label">Explanation:</div>
+                            <div class="log-detail-value explanation" id="log-explanation">-</div>
+                        </div>
+                        <div class="log-detail-section">
+                            <div class="log-detail-label">Source:</div>
+                            <div class="log-detail-value source-badge" id="log-source">HYBRID</div>
+                        </div>
+                        <div class="log-detail-section" id="log-url-analysis" style="display: none;">
+                            <div class="log-detail-label">URL Analysis:</div>
+                            <div class="log-detail-value" id="log-url-analysis-details">-</div>
+                        </div>
+                        <div class="log-detail-section" id="log-ai-analysis" style="display: none;">
+                            <div class="log-detail-label">AI Analysis:</div>
+                            <div class="log-detail-value" id="log-ai-analysis-details">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Layer 1: Metadata Panel -->
+            <div class="metadata-panel">
+                <div class="panel-header">
+                    <h2>🛡️ Security Scan Results</h2>
+                </div>
+                <div class="metadata-grid">
+                    <div class="metadata-item">
+                        <div class="metadata-label">Domain:</div>
+                        <div class="metadata-value" id="metadata-domain">-</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="metadata-label">HTTPS Status:</div>
+                        <div class="metadata-value" id="metadata-https">-</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="metadata-label">IP Address:</div>
+                        <div class="metadata-value" id="metadata-ip">-</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="metadata-label">Redirect Count:</div>
+                        <div class="metadata-value" id="metadata-redirects">-</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="metadata-label">Blacklist Status:</div>
+                        <div class="metadata-value" id="metadata-blacklist">-</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="metadata-label">Page Title:</div>
+                        <div class="metadata-value" id="metadata-title">-</div>
+                    </div>
+                    <div class="metadata-item full-width">
+                        <div class="metadata-label">Meta Description:</div>
+                        <div class="metadata-value" id="metadata-description">-</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="metadata-label">Favicon:</div>
+                        <div class="metadata-value" id="metadata-favicon">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Layer 2: Static Preview -->
+            <div class="static-preview-panel" id="static-preview-panel" style="display: none;">
+                <div class="panel-header">
+                    <h2>📄 Static Page Preview</h2>
+                    <div class="preview-note">⚠️ This is a static preview. No JavaScript executed.</div>
+                </div>
+                <div id="static-preview-content" class="static-preview-content">
+                    <div class="preview-card">
+                        <div class="preview-image-container" id="preview-image-container">
+                            <img id="preview-og-image" class="preview-og-image" alt="Page preview" style="display: none;">
+                            <div class="preview-image-placeholder" id="preview-image-placeholder">
+                                <span class="image-icon">🖼️</span>
+                                <p>No preview image available</p>
+                            </div>
+                        </div>
+                        <div class="preview-info">
+                            <div class="preview-favicon-title">
+                                <img id="preview-favicon" class="preview-favicon" alt="Favicon" style="display: none;">
+                                <h3 id="preview-title" class="preview-title">-</h3>
+                            </div>
+                            <p id="preview-description" class="preview-description">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Layer 3: Sandbox Preview -->
+            <div class="sandbox-panel" id="sandbox-panel" style="display: none;">
+                <div class="panel-header">
+                    <h2>🔒 Interactive Sandbox Preview</h2>
+                    <div class="sandbox-status" id="sandbox-status"></div>
+                </div>
+                <div class="sandbox-content">
+                    <div id="sandbox-loading" class="sandbox-loading">
+                        <div class="spinner-small"></div>
+                        <p>Loading page in sandbox...</p>
+                    </div>
+                    <iframe 
+                        id="sandbox-iframe" 
+                        sandbox="allow-scripts"
+                        style="display: none;"
+                        title="Sandboxed content">
+                    </iframe>
+                    <div id="sandbox-error" class="sandbox-error" style="display: none;">
+                        <span class="error-icon-small">⚠️</span>
+                        <p>This site blocks sandbox preview. Metadata preview is shown instead.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="preview-actions">
+                <button id="cancel-btn" class="cancel-btn">Cancel</button>
+                <button id="open-anyway-btn" class="open-anyway-btn">Open Anyway</button>
+            </div>
+            
+            <!-- Warning Dialog -->
+            <div id="warning-dialog" class="warning-dialog" style="display: none;">
+                <div class="warning-dialog-content">
+                    <div class="warning-dialog-header">
+                        <span class="warning-icon-large">⚠️</span>
+                        <h3>Warning</h3>
+                    </div>
+                    <div class="warning-dialog-body">
+                        <p>You are leaving the Safe Preview environment.</p>
+                        <p class="warning-details">
+                            Opening this link in a regular tab will allow full access including:
+                        </p>
+                        <ul class="warning-list">
+                            <li>Full JavaScript execution</li>
+                            <li>File downloads</li>
+                            <li>Form submissions</li>
+                            <li>Navigation to other sites</li>
+                        </ul>
+                    </div>
+                    <div class="warning-dialog-actions">
+                        <button id="warning-cancel-btn" class="warning-cancel-btn">Cancel</button>
+                        <button id="warning-confirm-btn" class="warning-confirm-btn">Open Anyway</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="config.js"></script>
+    <script src="safe-preview.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Guardian — Hate speech</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="hatespeech-window">
+
+<div class="container hatespeech-container">
+
+    <div class="header hatespeech-header">
+        <h3>🟤 Hate speech tools</h3>
+        <p class="hatespeech-sub">Monitor Facebook / X or analyze pasted text.</p>
+    </div>
+
+    <div class="guardian-tools">
+        <button type="button" id="hateMonitorToggleBtn" class="tool-btn">
+            Start Monitoring This Page
+        </button>
+        <div id="hateMonitorStatus" class="tool-status">
+            Hate speech monitoring is off.
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <div id="hateChatMessages" class="chat-messages">
+            <div class="message system-message">
+                Paste text below and tap Analyze, or turn on monitoring for the open tab.
+            </div>
+        </div>
+    </div>
+
+    <div class="input-area">
+        <textarea id="hateSpeechInput" rows="4" placeholder="Paste text to check for hate or offensive language…"></textarea>
+        <div class="input-button-row">
+            <button type="button" id="hateSpeechAnalyzeBtn" class="secondary-btn">
+                Analyze hate speech
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<script src="hatespeech.js"></script>
+</body>
+
+</html>
